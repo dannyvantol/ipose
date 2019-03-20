@@ -15,7 +15,7 @@ public class Renderer {
     public Renderer(Game game,Stage stage) {
         this.game = game;
         this.stage = stage;
-        this.camera = new Camera();
+        this.camera = new Camera(stage, game);
 
     }
 
