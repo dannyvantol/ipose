@@ -8,20 +8,19 @@ import javafx.stage.Stage;
 
 public class Camera {
 
-    private int posX;
-    private int posY;
+    private double posX;
+    private double posY;
     private Element focusElement;
-    private Stage stage;
     private Scene scene;
     private Game game;
 
     private Parent sceneRoot;
 
     public Camera(Stage stage, Game game) {
-        this.stage = stage;
         this.scene = stage.getScene();
         this.sceneRoot = stage.getScene().getRoot();
         this.game = game;
+        bind(game.getActiveLevel().getElements().get(0));
     }
 
     public void calculatePosistion() {
@@ -35,6 +34,7 @@ public class Camera {
             return;
         }
         sceneRoot.setLayoutX(-1 * focusElement.getX() + offset);
+        this.posX = -1 * sceneRoot.getLayoutX();
         double minLayout = -1 * game.getActiveLevel().getWidth() + scene.getWidth();
         if (sceneRoot.getLayoutX() < minLayout) {
             sceneRoot.setLayoutX(minLayout);
@@ -47,6 +47,7 @@ public class Camera {
             return;
         }
         sceneRoot.setLayoutY(-1 * focusElement.getY() + offset);
+        this.posY = -1 * sceneRoot.getLayoutY();
         double minLayout = -1 * game.getActiveLevel().getHeigt() + scene.getHeight();
         if (sceneRoot.getLayoutY() < minLayout) {
             sceneRoot.setLayoutY(minLayout);
