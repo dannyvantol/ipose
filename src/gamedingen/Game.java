@@ -13,4 +13,8 @@ public abstract class Game {
     public Level getActiveLevel() {
         return activeLevel;
     }
+
+    public void setLevels(ArrayList<Level> levels) {
+        this.levels = levels;
+    }
 }

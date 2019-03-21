@@ -21,4 +21,8 @@ public abstract class Level {
     public int getHeigt() {
         return tiles[0].length * 80;
     }
+
+    public void setTiles(Tile[][] tiles) {
+        this.tiles = tiles;
+    }
 }
