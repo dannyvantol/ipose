@@ -13,4 +13,12 @@ public abstract class Level {
     public ArrayList<Element> getElements() {
         return elements;
     }
+
+    public int getWidth() {
+        return tiles.length * 80;
+    }
+
+    public int getHeigt() {
+        return tiles[0].length * 80;
+    }
 }
