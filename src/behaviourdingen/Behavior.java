@@ -1,4 +1,4 @@
-package enginedingen.behavior;
+package behaviourdingen;
 
 public interface Behavior {
 }

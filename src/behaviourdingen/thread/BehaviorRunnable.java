@@ -1,11 +1,10 @@
-package enginedingen.thread;
+package behaviourdingen.thread;
 
 import enginedingen.Engine;
-import enginedingen.behavior.Behavior;
-import enginedingen.behavior.BehaviorManager;
+import behaviourdingen.Behavior;
+import behaviourdingen.BehaviorManager;
 import gamedingen.Element;
 import gamedingen.Level;
-import gamedingen.Tile;
 
 import java.util.ArrayList;
 import java.util.Set;

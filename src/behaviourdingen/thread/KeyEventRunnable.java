@@ -1,13 +1,10 @@
-package enginedingen.thread;
+package behaviourdingen.thread;
 
 import enginedingen.Engine;
-import enginedingen.behavior.Behavior;
-import enginedingen.behavior.BehaviorManager;
 import gamedingen.Element;
 import gamedingen.Level;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class KeyEventRunnable implements Runnable {
 

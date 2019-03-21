@@ -1,8 +1,8 @@
 package enginedingen;
 
-import enginedingen.behavior.Behavior;
-import enginedingen.behavior.BehaviorManager;
-import enginedingen.thread.BehaviorRunnable;
+import behaviourdingen.Behavior;
+import behaviourdingen.BehaviorManager;
+import behaviourdingen.thread.BehaviorRunnable;
 import gamedingen.Element;
 import gamedingen.Game;
 import javafx.animation.AnimationTimer;
@@ -10,8 +10,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class Engine extends Application {
     private Game game;
