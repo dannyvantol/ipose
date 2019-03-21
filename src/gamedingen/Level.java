@@ -25,4 +25,8 @@ public abstract class Level {
     public void setTiles(Tile[][] tiles) {
         this.tiles = tiles;
     }
+
+    public void setElements(ArrayList<Element> elements) {
+        this.elements = elements;
+    }
 }
