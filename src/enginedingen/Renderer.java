@@ -15,7 +15,7 @@ public class Renderer {
     public Renderer(Game game,Stage stage) {
         this.game = game;
         this.stage = stage;
-        this.camera = new Camera(stage, game);
+        this.camera = new Camera(game);
 
     }
 
@@ -26,6 +26,7 @@ public class Renderer {
 
     //WORK IN PROGRESS IK WEET DAT DEZE MOET SAMENWERKEN MET DE CAMERA MAAR DAT MOET IK NOG EVEN UITDENKEN NO FLAME PLEASE!!!!!!!!!!!!!
     public void render(){
+        camera.calculatePosition();
         renderTiles();
         renderElements();
         this.getRootGroup().getChildren().addAll(this.game.getActiveLevel().getElements());
