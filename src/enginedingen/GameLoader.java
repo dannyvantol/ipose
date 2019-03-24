@@ -19,66 +19,66 @@ public class GameLoader {
     private static final String LEVEL_ELEMENTS_PREFIX = "elements/";
     private static final String LEVEL_EXT = ".txt";
 
-    private HashMap<Integer, Class<? extends Tile>> tileMap;
+    private HashMap<Integer, Class<? extends AbstractTile>> tileMap;
 
-    private HashMap<Integer, Class<? extends Element>> elementMap;
+    private HashMap<Integer, Class<? extends AbstractElement>> elementMap;
 
     private HashMap<Integer, String> levelTilesPaths;
 
     private HashMap<Integer, String> levelElementsPaths;
 
-    public Game load() {
-        ArrayList<Level> levels = new ArrayList<>();
+    public AbstractGame load() {
+        ArrayList<AbstractLevel> abstractLevels = new ArrayList<>();
         int numberOfLevels = Objects.requireNonNull(new File(LEVEL_DIR).listFiles()).length;
 
         for (int levelNumber = 1; levelNumber <= numberOfLevels; levelNumber++) {
             InputStream tilesData = getLevelTilesData(levelNumber);
             InputStream elementsData = getLevelElementsData(levelNumber);
-            Level level = loadLevel(tilesData);
-            levels.add(loadLevel(tilesData));
+            AbstractLevel abstractLevel = loadLevel(tilesData);
+            abstractLevels.add(loadLevel(tilesData));
         }
 
-        Game game = new GameImpl();
-        game.setLevels(levels);
+        AbstractGame abstractGame = new AbstractGameImpl();
+        abstractGame.setAbstractLevels(abstractLevels);
 
-        return game;
+        return abstractGame;
     }
 
-    private Level loadLevel(InputStream stream) {
+    private AbstractLevel loadLevel(InputStream stream) {
         Scanner scanner = new Scanner(stream);
-        Level level = new LevelImpl();
-        Tile[][] tiles = new Tile[LEVEL_HEIGHT][LEVEL_WIDTH];
+        AbstractLevel abstractLevel = new AbstractLevelImpl();
+        AbstractTile[][] abstractTiles = new AbstractTile[LEVEL_HEIGHT][LEVEL_WIDTH];
 
         for (int y = 0; y < LEVEL_HEIGHT; y++) {
             for (int x = 0; x < LEVEL_WIDTH; x++) {
                 int id = scanner.nextInt();
 
                 try {
-                    tiles[x][y] = tileMap.get(id).newInstance();
+                    abstractTiles[x][y] = tileMap.get(id).newInstance();
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        level.setTiles(tiles);
+        abstractLevel.setAbstractTiles(abstractTiles);
 
-        return level;
+        return abstractLevel;
     }
 
-    private void loadElementsInLevel(InputStream stream, Level level) {
-        ArrayList<Element> elements = new ArrayList<>();
+    private void loadElementsInLevel(InputStream stream, AbstractLevel abstractLevel) {
+        ArrayList<AbstractElement> abstractElements = new ArrayList<>();
         Scanner scanner = new Scanner(stream);
         while (scanner.hasNext()) {
             int id = scanner.nextInt();
 
             try {
-                elements.add(elementMap.get(id).newInstance());
+                abstractElements.add(elementMap.get(id).newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        level.setElements(elements);
+        abstractLevel.setAbstractElements(abstractElements);
     }
 
     private InputStream getLevelElementsData(int level) {
@@ -97,11 +97,11 @@ public class GameLoader {
         levelElementsPaths.put(level, levelElementsPath);
     }
 
-    public void addTileConfiguration(HashMap<Integer, Class<? extends Tile>> tileMap) {
+    public void addTileConfiguration(HashMap<Integer, Class<? extends AbstractTile>> tileMap) {
         this.tileMap = tileMap;
     }
 
-    public void addElementsConfiguration(HashMap<Integer, Class<? extends Element>> elementMap) {
+    public void addElementsConfiguration(HashMap<Integer, Class<? extends AbstractElement>> elementMap) {
         this.elementMap = elementMap;
     }
 

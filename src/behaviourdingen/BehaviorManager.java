@@ -1,7 +1,7 @@
 package behaviourdingen;
 
-import gamedingen.Element;
+import gamedingen.AbstractElement;
 
 public interface BehaviorManager {
-    void handle(Element element);
+    void handle(AbstractElement abstractElement);
 }

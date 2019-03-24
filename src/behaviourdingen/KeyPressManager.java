@@ -1,20 +1,20 @@
 package behaviourdingen;
 
-import behaviourdingen.behaviors.Collidable;
+
 import behaviourdingen.behaviors.KeyPressed;
-import gamedingen.Element;
+import gamedingen.AbstractElement;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class EventManager implements BehaviourManager {
+public class KeyPressManager implements BehaviorManager {
 
     private Stage stage;
     private ArrayList<String> keyCodes;
 
-    public EventManager(Stage stage) {
+    public KeyPressManager(Stage stage) {
         this.stage = stage;
         keyCodes = new ArrayList<>();
         setupKeyConfig();
@@ -41,9 +41,10 @@ public class EventManager implements BehaviourManager {
 
 
     @Override
-    public void handleBehaviour(Element element) {
-        KeyPressed keyPressed = (KeyPressed) element;
+    public void handle(AbstractElement abstractElement) {
+        KeyPressed keyPressed = (KeyPressed) abstractElement;
         keyPressed.handleKeyPresses(keyCodes);
     }
+
 }
 
