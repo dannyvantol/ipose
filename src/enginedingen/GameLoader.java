@@ -34,8 +34,10 @@ public class GameLoader {
         for (int levelNumber = 1; levelNumber <= numberOfLevels; levelNumber++) {
             InputStream tilesData = getLevelTilesData(levelNumber);
             InputStream elementsData = getLevelElementsData(levelNumber);
-            Level level = loadLevel(tilesData);
-            levels.add(loadLevel(tilesData));
+            Level level = new Level();
+            loadTilesInLevel(tilesData, level);
+            loadElementsInLevel(elementsData, level);
+            levels.add(level);
         }
 
         Game game = new Game();
@@ -44,17 +46,19 @@ public class GameLoader {
         return game;
     }
 
-    private Level loadLevel(InputStream stream) {
+    private Level loadTilesInLevel(InputStream stream, Level level) {
         Scanner scanner = new Scanner(stream);
-        Level level = new Level();
         Tile[][] tiles = new Tile[LEVEL_HEIGHT][LEVEL_WIDTH];
 
         for (int y = 0; y < LEVEL_HEIGHT; y++) {
             for (int x = 0; x < LEVEL_WIDTH; x++) {
-                int id = scanner.nextInt();
-
                 try {
-                    tiles[x][y] = tileMap.get(id).newInstance();
+                    int id = scanner.nextInt();
+                    if (tileMap.get(id) == null) continue;
+                    Tile tile = tileMap.get(id).newInstance();
+                    tile.setX(x);
+                    tile.setY(y);
+                    tiles[x][y] = tile;
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -69,15 +73,21 @@ public class GameLoader {
     private void loadElementsInLevel(InputStream stream, Level level) {
         ArrayList<Element> elements = new ArrayList<>();
         Scanner scanner = new Scanner(stream);
-        while (scanner.hasNext()) {
-            int id = scanner.nextInt();
-
-            try {
-                elements.add(elementMap.get(id).newInstance());
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+        for (int y = 0; y < LEVEL_HEIGHT; y++) {
+            for (int x = 0; x < LEVEL_WIDTH; x++) {
+                try {
+                    int id = scanner.nextInt();
+                    if (elementMap.get(id) == null) continue;
+                    Element element = elementMap.get(id).newInstance();
+                    element.setX(x);
+                    element.setY(y);
+                    elements.add(element);
+                } catch (InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
         level.setElements(elements);
     }
 
