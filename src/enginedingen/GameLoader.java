@@ -35,7 +35,7 @@ public class GameLoader {
             InputStream tilesData = getLevelTilesData(levelNumber);
             InputStream elementsData = getLevelElementsData(levelNumber);
             Level level = new LevelImpl();
-            loadLevel(tilesData, level);
+            loadTilesInLevel(tilesData, level);
             loadElementsInLevel(elementsData, level);
             levels.add(level);
         }
@@ -46,7 +46,7 @@ public class GameLoader {
         return game;
     }
 
-    private Level loadLevel(InputStream stream, Level level) {
+    private Level loadTilesInLevel(InputStream stream, Level level) {
         Scanner scanner = new Scanner(stream);
         Tile[][] tiles = new Tile[LEVEL_HEIGHT][LEVEL_WIDTH];
 
