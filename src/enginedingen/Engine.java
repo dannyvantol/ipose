@@ -38,7 +38,7 @@ public class Engine extends Application {
         this.stage = primaryStage;
         setupInitialBehaviorsAndRenderer();
 
-
+        renderer.render();
 
         new AnimationTimer() {
             @Override
@@ -64,7 +64,9 @@ public class Engine extends Application {
 
     private void setupInitialBehaviorsAndRenderer() {
         this.renderer = new Renderer(game,stage);
-        focusOnElement(getGame().getActiveLevel().getElements().get(0));
+        if(getGame().getActiveLevel().getFocusedElement() != null){
+            focusOnElement(getGame().getActiveLevel().getFocusedElement());
+        }
         KeyPressManager keyPressManager = new KeyPressManager(stage);
         CollisionManager collisionManager = new CollisionManager(game.getActiveLevel().getElements());
         addBehavior(Collidable.class,collisionManager);
@@ -93,6 +95,7 @@ public class Engine extends Application {
 //        keyInputThread.start();
 //        behaviorThread.start();
 //    }
+
 
     public Game getGame() {
         return this.game;

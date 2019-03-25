@@ -3,6 +3,8 @@ package enginedingen;
 import gamedingen.*;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +29,14 @@ public class GameLoader {
 
     private HashMap<Integer, String> levelElementsPaths;
 
+    public GameLoader() {
+        this.levelTilesPaths = new HashMap<>();
+        this.levelElementsPaths = new HashMap<>();
+    }
+
     public Game load() {
         ArrayList<Level> levels = new ArrayList<>();
-        int numberOfLevels = Objects.requireNonNull(new File(LEVEL_DIR).listFiles()).length;
+        int numberOfLevels = levelTilesPaths.size();
 
         for (int levelNumber = 1; levelNumber <= numberOfLevels; levelNumber++) {
             InputStream tilesData = getLevelTilesData(levelNumber);
@@ -48,16 +55,18 @@ public class GameLoader {
 
     private Level loadTilesInLevel(InputStream stream, Level level) {
         Scanner scanner = new Scanner(stream);
-        Tile[][] tiles = new Tile[LEVEL_HEIGHT][LEVEL_WIDTH];
+        int levelHeight = scanner.nextInt();
+        int levelWidth = scanner.nextInt();
+        Tile[][] tiles = new Tile[levelHeight][levelWidth];
 
-        for (int y = 0; y < LEVEL_HEIGHT; y++) {
-            for (int x = 0; x < LEVEL_WIDTH; x++) {
+        for (int y = 0; y < levelHeight; y++) {
+            for (int x = 0; x < levelWidth; x++) {
                 try {
                     int id = scanner.nextInt();
                     if (tileMap.get(id) == null) continue;
                     Tile tile = tileMap.get(id).newInstance();
-                    tile.setX(x);
-                    tile.setY(y);
+                    tile.setX(x*80);
+                    tile.setY(y*80);
                     tiles[x][y] = tile;
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
@@ -73,14 +82,16 @@ public class GameLoader {
     private void loadElementsInLevel(InputStream stream, Level level) {
         ArrayList<Element> elements = new ArrayList<>();
         Scanner scanner = new Scanner(stream);
-        for (int y = 0; y < LEVEL_HEIGHT; y++) {
-            for (int x = 0; x < LEVEL_WIDTH; x++) {
+        int levelHeight = scanner.nextInt();
+        int levelWidth = scanner.nextInt();
+        for (int y = 0; y < levelHeight; y++) {
+            for (int x = 0; x < levelWidth; x++) {
                 try {
                     int id = scanner.nextInt();
                     if (elementMap.get(id) == null) continue;
                     Element element = elementMap.get(id).newInstance();
-                    element.setX(x);
-                    element.setY(y);
+                    element.setX(x*80);
+                    element.setY(y*80);
                     elements.add(element);
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
@@ -92,13 +103,22 @@ public class GameLoader {
     }
 
     private InputStream getLevelElementsData(int level) {
-        String fileName = LEVEL_DIR + LEVEL_PREFIX + LEVEL_ELEMENTS_PREFIX + level + LEVEL_EXT;
-        return getClass().getClassLoader().getResourceAsStream(fileName);
+        String filePath = levelElementsPaths.get(level);
+        return readFile(filePath);
     }
 
     private InputStream getLevelTilesData(int level) {
-        String fileName = LEVEL_DIR + LEVEL_PREFIX + LEVEL_TILES_PREFIX + level + LEVEL_EXT;
-        return getClass().getClassLoader().getResourceAsStream(fileName);
+        String filePath = levelTilesPaths.get(level);
+        return readFile(filePath);
+    }
+
+    private InputStream readFile(String filePath){
+        try {
+            return new FileInputStream(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void addLevel(int level, String levelTilesPath, String levelElementsPath) {

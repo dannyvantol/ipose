@@ -2,19 +2,16 @@ package enginedingen;
 
 import gamedingen.Element;
 import gamedingen.Game;
+import javafx.scene.PerspectiveCamera;
 
-public class Camera {
-
-    private double posX;
-    private double posY;
+public class Camera extends PerspectiveCamera {
+    
     private Element focusElement;
     private Game game;
 
 
     public Camera(Game game) {
         this.game = game;
-        this.posX = 0;
-        this.posY = 0;
     }
 
     public void calculatePosition() {
@@ -25,10 +22,23 @@ public class Camera {
     private void calculatePositionX() {
         if (focusElement != null) {
             double elementX = focusElement.getX();
-            if (elementX > 1024 / 3 * 2 && posX <= game.getActiveLevel().getWidth()) {
-                posX += elementX;
-            } else if (elementX < 1024 / 3 && posX >= 0) {
-                posX -= elementX;
+            if (elementX > super.getLayoutX() + (1024 / 3 * 2) && super.getLayoutX() +1024 <= game.getActiveLevel().getWidth()) {
+                double newCameraPosX = super.getLayoutX() + elementX -(super.getLayoutX() + (1024 / 3 * 2));
+                if(newCameraPosX +1024 <= game.getActiveLevel().getWidth()){
+                    super.setLayoutX(newCameraPosX) ;
+                } else{
+                    super.setLayoutX(game.getActiveLevel().getWidth()-1024);
+                }
+
+            } else if (elementX < super.getLayoutX() +( 1024 / 3)) {
+                double newCameraPosX = super.getLayoutX()- ((super.getLayoutX() +( 1024 / 3)) - elementX );
+                if(newCameraPosX >= 0){
+                    super.setLayoutX(newCameraPosX);
+                }
+                else{
+                    super.setLayoutX(0);
+                }
+
             }
         }
     }
@@ -36,10 +46,24 @@ public class Camera {
     private void calculatePositionY() {
         if (focusElement != null) {
             double elementY = focusElement.getY();
-            if (elementY > 768 / 3 * 2 && posY <= game.getActiveLevel().getHeigt()) {
-                posY += elementY;
-            } else if (elementY < 768 / 3 && posY >= 0) {
-                posY -= elementY;
+            if (elementY > super.getLayoutY() +( 768 / 3 * 2) && super.getLayoutY() + 768 <= game.getActiveLevel().getHeigt()) {
+                double newCameraPosY = super.getLayoutY() + elementY - ( super.getLayoutY() +( 768 / 3 * 2));
+                if(newCameraPosY + 768 <= game.getActiveLevel().getHeigt()){
+                    super.setLayoutY(newCameraPosY);
+                }
+                else{
+                    super.setLayoutY(game.getActiveLevel().getHeigt() -768);
+                }
+
+            } else if (elementY < super.getLayoutY() +( 768 / 3) && super.getLayoutY() >= 0) {
+                double newCameraPosY = super.getLayoutY() - ((super.getLayoutY() +( 768 / 3)) - elementY);
+                if(newCameraPosY >= 0){
+                    super.setLayoutY(super.getLayoutY() - ((super.getLayoutY() +( 768 / 3)) - elementY));
+                }
+                else{
+                    super.setLayoutY(0);
+                }
+
             }
         }
     }
@@ -49,10 +73,10 @@ public class Camera {
     }
 
     public double getX() {
-        return posX;
+        return super.getLayoutX();
     }
 
     public double getY() {
-        return posY;
+        return super.getLayoutY();
     }
 }

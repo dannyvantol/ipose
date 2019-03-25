@@ -5,6 +5,15 @@ import java.util.ArrayList;
 public class Level {
     private Tile[][] tiles;
     private ArrayList<Element> elements;
+    private Element focusedElement;
+
+    public Element getFocusedElement() {
+        return focusedElement;
+    }
+
+    public void setFocusedElement(Element focusedElement) {
+        this.focusedElement = focusedElement;
+    }
 
     public Tile[][] getTiles() {
         return tiles;

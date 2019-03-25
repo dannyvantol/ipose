@@ -4,6 +4,7 @@ import gamedingen.Element;
 import gamedingen.Game;
 import gamedingen.Tile;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -29,10 +30,12 @@ public class Renderer {
     //WORK IN PROGRESS IK WEET DAT DEZE MOET SAMENWERKEN MET DE CAMERA MAAR DAT MOET IK NOG EVEN UITDENKEN NO FLAME PLEASE!!!!!!!!!!!!!
     public void render(){
         camera.calculatePosition();
-        getRootGroup().relocate(camera.getX(),camera.getY());
+        this.stage.getScene().setCamera(camera);
         renderTiles();
         renderElements();
+
     }
+
 
     private void renderTiles() {
         Rectangle rectangle = new Rectangle(1024+80,768+80);
@@ -57,7 +60,10 @@ public class Renderer {
         rectangle.setX(camera.getX()-80);
         rectangle.setY(camera.getY()-80);
         for(Element element :this.game.getActiveLevel().getElements()){
-            if(element.intersects(rectangle.getLayoutBounds()) &&!getRootGroup().getChildren().contains(element) ){
+            if(element.intersects(rectangle.getLayoutBounds())){
+                if(getRootGroup().getChildren().contains(element)){
+                    getRootGroup().getChildren().remove(element);
+                }
                 getRootGroup().getChildren().add(element);
             }
             else if(!element.intersects(rectangle.getLayoutBounds()) && getRootGroup().getChildren().contains(element) ){
