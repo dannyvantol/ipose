@@ -54,6 +54,7 @@ public class GameLoader {
             for (int x = 0; x < LEVEL_WIDTH; x++) {
                 try {
                     int id = scanner.nextInt();
+                    if (tileMap.get(id) == null) continue;
                     Tile tile = tileMap.get(id).newInstance();
                     tile.setX(x);
                     tile.setY(y);
@@ -76,7 +77,8 @@ public class GameLoader {
             for (int x = 0; x < LEVEL_WIDTH; x++) {
                 try {
                     int id = scanner.nextInt();
-                    Element element = tileMap.get(id).newInstance();
+                    if (elementMap.get(id) == null) continue;
+                    Element element = elementMap.get(id).newInstance();
                     element.setX(x);
                     element.setY(y);
                     elements.add(element);
