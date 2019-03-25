@@ -6,9 +6,9 @@ import behaviourdingen.CollisionManager;
 import behaviourdingen.KeyPressManager;
 import behaviourdingen.behaviors.Collidable;
 import behaviourdingen.behaviors.KeyPressed;
-import gamedingen.AbstractElement;
-import gamedingen.AbstractGame;
-import gamedingen.AbstractLevel;
+import gamedingen.Element;
+import gamedingen.Game;
+import gamedingen.Level;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,14 +18,14 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Engine extends Application {
-    private AbstractGame abstractGame;
+    private Game game;
     private Renderer renderer;
     private HashMap<Class<? extends Behavior>, BehaviorManager> behaviors;
     private Stage stage;
 
 
-    public Engine(AbstractGame abstractGame) {
-        this.abstractGame = abstractGame;
+    public Engine(Game game) {
+        this.game = game;
         this.behaviors = new HashMap<>();
     }
 
@@ -36,7 +36,6 @@ public class Engine extends Application {
     public void start(Stage primaryStage) {
 
         this.stage = primaryStage;
-
         setupInitialBehaviorsAndRenderer();
 
 
@@ -49,12 +48,12 @@ public class Engine extends Application {
                 for (Class<? extends Behavior> behavior : behaviorsKeySet) {
                     BehaviorManager behaviorManager = getBehaviors().get(behavior);
 
-                    AbstractLevel abstractLevel = getAbstractGame().getActiveAbstractLevel();
-                    ArrayList<AbstractElement> abstractElements = abstractLevel.getAbstractElements();
+                    Level level = getGame().getActiveLevel();
+                    ArrayList<Element> elements = level.getElements();
 
-                    for (AbstractElement abstractElement : abstractElements) {
-                        if (behavior.isInstance(abstractElement))
-                            behaviorManager.handle(abstractElement);
+                    for (Element element : elements) {
+                        if (behavior.isInstance(element))
+                            behaviorManager.handle(element);
                     }
                 }
                 renderer.render();
@@ -64,9 +63,10 @@ public class Engine extends Application {
     }
 
     private void setupInitialBehaviorsAndRenderer() {
-        this.renderer = new Renderer(abstractGame,stage);
+        this.renderer = new Renderer(game,stage);
+        focusOnElement(getGame().getActiveLevel().getElements().get(0));
         KeyPressManager keyPressManager = new KeyPressManager(stage);
-        CollisionManager collisionManager = new CollisionManager(abstractGame.getActiveAbstractLevel().getAbstractElements());
+        CollisionManager collisionManager = new CollisionManager(game.getActiveLevel().getElements());
         addBehavior(Collidable.class,collisionManager);
         addBehavior(KeyPressed.class,keyPressManager);
 
@@ -76,8 +76,8 @@ public class Engine extends Application {
         this.behaviors.put(behavior, behaviorManager);
     }
 
-    public void focusOnElement(AbstractElement abstractElement) {
-        this.renderer.getCamera().focus(abstractElement);
+    public void focusOnElement(Element element) {
+        this.renderer.getCamera().focus(element);
     }
 
 //    public void loop() {
@@ -94,8 +94,8 @@ public class Engine extends Application {
 //        behaviorThread.start();
 //    }
 
-    public AbstractGame getAbstractGame() {
-        return this.abstractGame;
+    public Game getGame() {
+        return this.game;
     }
 
     public HashMap<Class<? extends Behavior>, BehaviorManager> getBehaviors() {

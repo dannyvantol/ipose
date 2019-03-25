@@ -1,21 +1,22 @@
 package enginedingen;
 
-import gamedingen.AbstractElement;
-import gamedingen.AbstractGame;
+import gamedingen.Element;
+import gamedingen.Game;
+import gamedingen.Tile;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Renderer {
-    private AbstractGame abstractGame;
+    private Game game;
     private Camera camera;
     private Stage stage;
 
-    public Renderer(AbstractGame abstractGame, Stage stage) {
-        this.abstractGame = abstractGame;
+    public Renderer(Game game, Stage stage) {
+        this.game = game;
         this.stage = stage;
-        this.camera = new Camera(abstractGame);
+        this.camera = new Camera(game);
         initialSetup();
     }
 
@@ -29,14 +30,23 @@ public class Renderer {
     public void render(){
         camera.calculatePosition();
         getRootGroup().relocate(camera.getX(),camera.getY());
+        renderTiles();
         renderElements();
-        this.getRootGroup().getChildren().addAll(this.abstractGame.getActiveAbstractLevel().getAbstractElements());
     }
 
     private void renderTiles() {
-        for(int i = 0; i<this.abstractGame.getActiveAbstractLevel().getAbstractTiles().length; i++){
-            for(int j = 0; j<this.abstractGame.getActiveAbstractLevel().getAbstractTiles()[i].length; j++){
-                this.getRootGroup().getChildren().add(this.abstractGame.getActiveAbstractLevel().getAbstractTiles()[i][j]);
+        Rectangle rectangle = new Rectangle(1024+80,768+80);
+        rectangle.setX(camera.getX()-80);
+        rectangle.setY(camera.getY()-80);
+        for(int i = 0; i<this.game.getActiveLevel().getTiles().length; i++){
+            for(int j = 0; j<this.game.getActiveLevel().getTiles()[i].length; j++){
+                Tile tile = this.game.getActiveLevel().getTiles()[i][j];
+                if(tile.intersects(rectangle.getLayoutBounds()) &&!getRootGroup().getChildren().contains(tile) ){
+                    getRootGroup().getChildren().add(tile);
+                }
+                else if(!tile.intersects(rectangle.getLayoutBounds()) && getRootGroup().getChildren().contains(tile) ){
+                    getRootGroup().getChildren().remove(tile);
+                }
             }
         }
     }
@@ -46,11 +56,12 @@ public class Renderer {
         Rectangle rectangle = new Rectangle(1024+80,768+80);
         rectangle.setX(camera.getX()-80);
         rectangle.setY(camera.getY()-80);
-        for(AbstractElement abstractElement :this.abstractGame.getActiveAbstractLevel().getAbstractElements()){
-            if(abstractElement.intersects(rectangle.getLayoutBounds())){
-                if(!getRootGroup().getChildren().contains(abstractElement)){
-                    getRootGroup().getChildren().add(abstractElement);
-                }
+        for(Element element :this.game.getActiveLevel().getElements()){
+            if(element.intersects(rectangle.getLayoutBounds()) &&!getRootGroup().getChildren().contains(element) ){
+                getRootGroup().getChildren().add(element);
+            }
+            else if(!element.intersects(rectangle.getLayoutBounds()) && getRootGroup().getChildren().contains(element) ){
+                getRootGroup().getChildren().remove(element);
             }
         }
 

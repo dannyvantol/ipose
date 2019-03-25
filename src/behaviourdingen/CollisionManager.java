@@ -1,25 +1,25 @@
 package behaviourdingen;
 
 import behaviourdingen.behaviors.Collidable;
-import gamedingen.AbstractElement;
+import gamedingen.Element;
 import javafx.geometry.Bounds;
 
 import java.util.ArrayList;
 
 public class CollisionManager implements BehaviorManager {
 
-    private ArrayList<AbstractElement> objects;
+    private ArrayList<Element> objects;
 
-    public CollisionManager(ArrayList<AbstractElement> abstractElements) {
-        this.objects = abstractElements;
+    public CollisionManager(ArrayList<Element> elements) {
+        this.objects = elements;
     }
 
     @Override
-    public void handle(AbstractElement abstractElement) {
-        for (AbstractElement object : objects) {
+    public void handle(Element element) {
+        for (Element object : objects) {
             Bounds bounds = object.getLayoutBounds();
-            if (abstractElement.intersects(bounds))
-                ((Collidable) abstractElement).handleCollision((Collidable) object);
+            if (element.intersects(bounds))
+                ((Collidable) element).handleCollision((Collidable) object);
         }
     }
 }

@@ -1,18 +1,18 @@
 package enginedingen;
 
-import gamedingen.AbstractElement;
-import gamedingen.AbstractGame;
+import gamedingen.Element;
+import gamedingen.Game;
 
 public class Camera {
 
     private double posX;
     private double posY;
-    private AbstractElement focusAbstractElement;
-    private AbstractGame abstractGame;
+    private Element focusElement;
+    private Game game;
 
 
-    public Camera(AbstractGame abstractGame) {
-        this.abstractGame = abstractGame;
+    public Camera(Game game) {
+        this.game = game;
         this.posX = 0;
         this.posY = 0;
     }
@@ -23,9 +23,9 @@ public class Camera {
     }
 
     private void calculatePositionX() {
-        if (focusAbstractElement != null) {
-            double elementX = focusAbstractElement.getX();
-            if (elementX > 1024 / 3 * 2 && posX <= abstractGame.getActiveAbstractLevel().getWidth()) {
+        if (focusElement != null) {
+            double elementX = focusElement.getX();
+            if (elementX > 1024 / 3 * 2 && posX <= game.getActiveLevel().getWidth()) {
                 posX += elementX;
             } else if (elementX < 1024 / 3 && posX >= 0) {
                 posX -= elementX;
@@ -34,9 +34,9 @@ public class Camera {
     }
 
     private void calculatePositionY() {
-        if (focusAbstractElement != null) {
-            double elementY = focusAbstractElement.getY();
-            if (elementY > 768 / 3 * 2 && posY <= abstractGame.getActiveAbstractLevel().getHeigt()) {
+        if (focusElement != null) {
+            double elementY = focusElement.getY();
+            if (elementY > 768 / 3 * 2 && posY <= game.getActiveLevel().getHeigt()) {
                 posY += elementY;
             } else if (elementY < 768 / 3 && posY >= 0) {
                 posY -= elementY;
@@ -44,8 +44,8 @@ public class Camera {
         }
     }
 
-    public void focus(AbstractElement abstractElement) {
-        this.focusAbstractElement = abstractElement;
+    public void focus(Element element) {
+        this.focusElement = element;
     }
 
     public double getX() {
