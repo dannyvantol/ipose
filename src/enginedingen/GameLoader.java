@@ -35,6 +35,7 @@ public class GameLoader {
             InputStream tilesData = getLevelTilesData(levelNumber);
             InputStream elementsData = getLevelElementsData(levelNumber);
             Level level = loadLevel(tilesData);
+            loadElementsInLevel(elementsData, level);
             levels.add(loadLevel(tilesData));
         }
 
