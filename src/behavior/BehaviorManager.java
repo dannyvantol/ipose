@@ -1,6 +1,6 @@
-package behaviourdingen;
+package behavior;
 
-import gamedingen.Element;
+import game.Element;
 
 public interface BehaviorManager {
     void handle(Element element);

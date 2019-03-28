@@ -1,20 +1,26 @@
-package gamedingen;
+package game;
 
 import java.util.ArrayList;
 
-public abstract class Game {
+public class Game {
     private ArrayList<Level> levels;
     private Level activeLevel;
 
-    public ArrayList<Level> getLevels() {
-        return levels;
-    }
 
     public Level getActiveLevel() {
         return activeLevel;
     }
 
+    public ArrayList<Level> getLevels() {
+        return levels;
+    }
+
+
     public void setLevels(ArrayList<Level> levels) {
         this.levels = levels;
+    }
+
+    public void setActiveLevel(Level level){
+        this.activeLevel = level;
     }
 }

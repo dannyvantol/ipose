@@ -1,18 +1,20 @@
-package enginedingen;
+package behavior;
 
-import gamedingen.Element;
+
+import behavior.behaviors.KeyBehavior;
+import game.Element;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class EventManager {
+public class KeyBehaviorManager implements BehaviorManager {
 
     private Stage stage;
     private ArrayList<String> keyCodes;
 
-    public EventManager(Stage stage) {
+    public KeyBehaviorManager(Stage stage) {
         this.stage = stage;
         keyCodes = new ArrayList<>();
         setupKeyConfig();
@@ -36,9 +38,13 @@ public class EventManager {
         });
     }
 
-    public void handleBehavior(Element element){
-        //element.handleKeyPresses(keyCodes);
+
+
+    @Override
+    public void handle(Element element) {
+        KeyBehavior keyBehavior = (KeyBehavior) element;
+        keyBehavior.handleKeyPresses(keyCodes);
     }
 
-
 }
+

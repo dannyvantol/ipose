@@ -1,4 +1,4 @@
-package behaviourdingen;
+package behavior;
 
 public interface Behavior {
 }
