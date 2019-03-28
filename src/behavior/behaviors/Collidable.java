@@ -1,6 +1,6 @@
-package behaviourdingen.behaviors;
+package behavior.behaviors;
 
-import behaviourdingen.Behavior;
+import behavior.Behavior;
 
 public interface Collidable extends Behavior {
 

@@ -1,4 +1,4 @@
-package gamedingen;
+package game;
 
 import java.util.ArrayList;
 

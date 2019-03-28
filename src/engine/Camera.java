@@ -1,7 +1,7 @@
-package enginedingen;
+package engine;
 
-import gamedingen.Element;
-import gamedingen.Game;
+import game.Element;
+import game.Game;
 import javafx.scene.PerspectiveCamera;
 
 public class Camera extends PerspectiveCamera {

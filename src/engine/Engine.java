@@ -1,14 +1,14 @@
-package enginedingen;
+package engine;
 
-import behaviourdingen.Behavior;
-import behaviourdingen.BehaviorManager;
-import behaviourdingen.CollisionManager;
-import behaviourdingen.KeyPressManager;
-import behaviourdingen.behaviors.Collidable;
-import behaviourdingen.behaviors.KeyPressed;
-import gamedingen.Element;
-import gamedingen.Game;
-import gamedingen.Level;
+import behavior.Behavior;
+import behavior.BehaviorManager;
+import behavior.CollisionManager;
+import behavior.KeyBehaviorManager;
+import behavior.behaviors.Collidable;
+import behavior.behaviors.KeyBehavior;
+import game.Element;
+import game.Game;
+import game.Level;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -67,10 +67,10 @@ public class Engine extends Application {
         if(getGame().getActiveLevel().getFocusedElement() != null){
             focusOnElement(getGame().getActiveLevel().getFocusedElement());
         }
-        KeyPressManager keyPressManager = new KeyPressManager(stage);
-        CollisionManager collisionManager = new CollisionManager(game.getActiveLevel().getElements());
+        KeyBehaviorManager keyBehaviorManager = new KeyBehaviorManager(stage);
+        CollisionManager collisionManager = new CollisionManager(game.getActiveLevel().getElements(),game.getActiveLevel().getTiles());
         addBehavior(Collidable.class,collisionManager);
-        addBehavior(KeyPressed.class,keyPressManager);
+        addBehavior(KeyBehavior.class, keyBehaviorManager);
 
     }
 

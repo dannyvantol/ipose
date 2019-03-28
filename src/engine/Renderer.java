@@ -1,10 +1,9 @@
-package enginedingen;
+package engine;
 
-import gamedingen.Element;
-import gamedingen.Game;
-import gamedingen.Tile;
+import game.Element;
+import game.Game;
+import game.Tile;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
