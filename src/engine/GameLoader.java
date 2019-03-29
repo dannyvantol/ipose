@@ -111,12 +111,7 @@ public class GameLoader {
     }
 
     private InputStream readFile(String filePath){
-        try {
-            return new FileInputStream(filePath);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.getClass().getResourceAsStream(filePath);
     }
 
     public void addLevel(int level, String levelTilesPath, String levelElementsPath) {
