@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Engine extends Application {
+public class Engine {
     private Game game;
     private Renderer renderer;
     private HashMap<Class<? extends Behavior>, BehaviorManager> behaviors;
@@ -32,7 +32,6 @@ public class Engine extends Application {
 
 
 
-    @Override
     public void start(Stage primaryStage) {
 
         this.stage = primaryStage;
