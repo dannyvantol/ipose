@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * Deze class is verantwoordelijk voor het afhandelen van KeyBehavoir.
+ * */
 public class KeyBehaviorManager implements BehaviorManager {
 
     private Stage stage;
@@ -39,7 +42,10 @@ public class KeyBehaviorManager implements BehaviorManager {
     }
 
 
-
+    /**
+     * Geeft aan dat er een Key event afgehandel moet worden door een element met een KeyBehavior uit het spel.
+     * @param element met KeyBehavior.
+     * */
     @Override
     public void handle(Element element) {
         KeyBehavior keyBehavior = (KeyBehavior) element;

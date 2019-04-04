@@ -9,15 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Deze class zorgd voor het laden van de game
+ * */
 public class GameLoader {
-
-    private static final int LEVEL_HEIGHT = 100;
-    private static final int LEVEL_WIDTH = 100;
-    private static final String LEVEL_DIR = "levels/";
-    private static final String LEVEL_PREFIX = "level";
-    private static final String LEVEL_TILES_PREFIX = "tiles/";
-    private static final String LEVEL_ELEMENTS_PREFIX = "elements/";
-    private static final String LEVEL_EXT = ".txt";
 
     private HashMap<Integer, Class<? extends Tile>> tileMap;
 
@@ -32,6 +27,11 @@ public class GameLoader {
         this.levelElementsPaths = new HashMap<>();
     }
 
+    /**
+     * Deze methode zorgd ervoor dat het spel geladen wordt.
+     *
+     * @return de game
+     * */
     public Game load() {
         ArrayList<Level> levels = new ArrayList<>();
         int numberOfLevels = levelTilesPaths.size();
@@ -49,6 +49,37 @@ public class GameLoader {
         game.setLevels(levels);
 
         return game;
+    }
+
+    /**
+     * Hiermee voeg je een level toe aan het spel.
+     * */
+    public void addLevel(int level, String levelTilesPath, String levelElementsPath) {
+        if (levelExists(level)) return;
+        levelTilesPaths.put(level, levelTilesPath);
+        levelElementsPaths.put(level, levelElementsPath);
+    }
+
+    /**
+     * Hier kun je een configuratie voor een tile toevoegen.
+     * Deze is dan te herkennen aan een bepaald nummer.
+     *
+     * @param tileMap een HashMap met een configuratie voor een tile.
+     * Bijvoorbeeld: 1,GrassTile
+     * */
+    public void addTileConfiguration(HashMap<Integer, Class<? extends Tile>> tileMap) {
+        this.tileMap = tileMap;
+    }
+
+    /**
+     * Hier kun je een configuratie voor een element toevoegen.
+     * Deze is dan te herkennen aan een bepaald nummer.
+     *
+     * @param elementMap een HashMap met een configuratie voor een element.
+     * Bijvoorbeeld: 1,Character
+     * */
+    public void addElementsConfiguration(HashMap<Integer, Class<? extends Element>> elementMap) {
+        this.elementMap = elementMap;
     }
 
     private Level loadTilesInLevel(InputStream stream, Level level) {
@@ -114,19 +145,6 @@ public class GameLoader {
         return this.getClass().getResourceAsStream(filePath);
     }
 
-    public void addLevel(int level, String levelTilesPath, String levelElementsPath) {
-        if (levelExists(level)) return;
-        levelTilesPaths.put(level, levelTilesPath);
-        levelElementsPaths.put(level, levelElementsPath);
-    }
-
-    public void addTileConfiguration(HashMap<Integer, Class<? extends Tile>> tileMap) {
-        this.tileMap = tileMap;
-    }
-
-    public void addElementsConfiguration(HashMap<Integer, Class<? extends Element>> elementMap) {
-        this.elementMap = elementMap;
-    }
 
     private boolean levelExists(int level) {
         return levelElementsPaths.get(level) != null && levelTilesPaths.get(level) != null;

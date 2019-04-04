@@ -4,6 +4,9 @@ import game.Element;
 import game.Game;
 import javafx.scene.PerspectiveCamera;
 
+/**
+ * Dit is de camera class die is verantwoordelijk voor welke onderdelen er in het spel komen en welke niet.
+ * */
 public class Camera extends PerspectiveCamera {
     
     private Element focusElement;
@@ -14,9 +17,34 @@ public class Camera extends PerspectiveCamera {
         this.game = game;
     }
 
+    /**
+     * Met deze methode reken je de x en y positie van de camera uit.
+     * */
     public void calculatePosition() {
         calculatePositionX();
         calculatePositionY();
+    }
+
+    /**
+     * Met deze methode laat je de camera zich op een bepaald element focussen.
+     * @param element waar de camera zich op moet focussen.
+     * */
+    public void focus(Element element) {
+        this.focusElement = element;
+    }
+
+    /**
+     * @return de x waarde van de camera.
+     * */
+    public double getX() {
+        return super.getLayoutX();
+    }
+
+    /**
+     * @return de y waarde van de camera.
+     * */
+    public double getY() {
+        return super.getLayoutY();
     }
 
     private void calculatePositionX() {
@@ -66,17 +94,5 @@ public class Camera extends PerspectiveCamera {
 
             }
         }
-    }
-
-    public void focus(Element element) {
-        this.focusElement = element;
-    }
-
-    public double getX() {
-        return super.getLayoutX();
-    }
-
-    public double getY() {
-        return super.getLayoutY();
     }
 }

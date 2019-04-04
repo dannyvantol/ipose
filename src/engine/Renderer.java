@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+/**
+ * Deze class zorgd voor het renderen van het spel.
+ * */
 public class Renderer {
     private Game game;
     private Camera camera;
@@ -27,6 +30,9 @@ public class Renderer {
     }
 
     //WORK IN PROGRESS IK WEET DAT DEZE MOET SAMENWERKEN MET DE CAMERA MAAR DAT MOET IK NOG EVEN UITDENKEN NO FLAME PLEASE!!!!!!!!!!!!!
+    /**
+     * Deze methode zet het renderen in werking.
+     * */
     public void render(){
         camera.calculatePosition();
         this.stage.getScene().setCamera(camera);
@@ -72,6 +78,9 @@ public class Renderer {
 
     }
 
+    /**
+     * @return de camera.
+     * */
     public Camera getCamera() {
         return camera;
     }

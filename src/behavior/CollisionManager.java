@@ -20,6 +20,10 @@ public class CollisionManager implements BehaviorManager {
 
     }
 
+    /**
+     * Geeft aan dat er een Collision event afgehandel moet worden door een element met een Collidable uit het spel.
+     * @param element met Collidable gedrag.
+     * */
     @Override
     public void handle(Element element) {
         for (Element object : elements) {
