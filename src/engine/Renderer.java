@@ -29,6 +29,10 @@ public class Renderer {
         this.stage.show();
     }
 
+    public void resetRenderer(){
+        this.stage.getScene().setRoot(new Group());
+    }
+
     //WORK IN PROGRESS IK WEET DAT DEZE MOET SAMENWERKEN MET DE CAMERA MAAR DAT MOET IK NOG EVEN UITDENKEN NO FLAME PLEASE!!!!!!!!!!!!!
     /**
      * Deze methode zet het renderen in werking.

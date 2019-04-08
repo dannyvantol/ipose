@@ -2,6 +2,7 @@ package behavior;
 
 import behavior.behaviors.Collidable;
 import game.Element;
+import game.Game;
 import game.Tile;
 import javafx.geometry.Bounds;
 
@@ -10,14 +11,11 @@ import java.util.Arrays;
 
 public class CollisionManager implements BehaviorManager {
 
-    private ArrayList<Element> elements;
-    private Tile[][] tiles;
+    private Game game;
 
-    public CollisionManager(ArrayList<Element> elements, Tile[][] tiles)
+    public CollisionManager(Game game)
     {
-        this.elements = elements;
-        this.tiles = tiles;
-
+        this.game = game;
     }
 
     /**
@@ -26,13 +24,14 @@ public class CollisionManager implements BehaviorManager {
      * */
     @Override
     public void handle(Element element) {
-        for (Element object : elements) {
+        for (Element object : game.getActiveLevel().getElements()) {
             if (object instanceof Collidable) {
                 Bounds bounds = object.getLayoutBounds();
                 if (element.intersects(bounds))
                     ((Collidable) element).handleCollision((Collidable) object);
             }
         }
+        Tile[][] tiles = game.getActiveLevel().getTiles();
         for(int i = 0; i<tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (tiles[i][j] instanceof Collidable) {

@@ -81,10 +81,14 @@ public class Engine {
             focusOnElement(getGame().getActiveLevel().getFocusedElement());
         }
         KeyBehaviorManager keyBehaviorManager = new KeyBehaviorManager(stage);
-        CollisionManager collisionManager = new CollisionManager(game.getActiveLevel().getElements(),game.getActiveLevel().getTiles());
+        CollisionManager collisionManager = new CollisionManager(game);
         addBehavior(Collidable.class,collisionManager);
         addBehavior(KeyBehavior.class, keyBehaviorManager);
 
+    }
+
+    public void resetRenderer(){
+        this.renderer.resetRenderer();
     }
 
     /**
