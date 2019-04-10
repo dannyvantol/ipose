@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  * Deze class zorgd voor het laden van de game
  * */
-public class GameLoader {
+public class GameLoader implements GameLoaderInterface {
 
     private HashMap<Integer, Class<? extends Tile>> tileMap;
 
@@ -22,7 +22,16 @@ public class GameLoader {
 
     private HashMap<Integer, String> levelElementsPaths;
 
+    private int tileSize;
+
+    public GameLoader(int tileSize) {
+        this.tileSize = tileSize;
+        this.levelTilesPaths = new HashMap<>();
+        this.levelElementsPaths = new HashMap<>();
+    }
+
     public GameLoader() {
+        this.tileSize = 80;
         this.levelTilesPaths = new HashMap<>();
         this.levelElementsPaths = new HashMap<>();
     }
@@ -32,6 +41,7 @@ public class GameLoader {
      *
      * @return de game
      * */
+    @Override
     public Game load() {
         ArrayList<Level> levels = new ArrayList<>();
         int numberOfLevels = levelTilesPaths.size();
@@ -94,9 +104,9 @@ public class GameLoader {
                     int id = scanner.nextInt();
                     if (tileMap.get(id) == null) continue;
                     Tile tile = tileMap.get(id).newInstance();
-                    tile.setX(x*80);
-                    tile.setY(y*80);
-                    tiles[x][y] = tile;
+                    tile.setX(x*tileSize);
+                    tile.setY(y*tileSize);
+                    tiles[y][x] = tile;
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -107,6 +117,7 @@ public class GameLoader {
 
         return level;
     }
+
 
     private void loadElementsInLevel(InputStream stream, Level level) {
         ArrayList<Element> elements = new ArrayList<>();
@@ -119,8 +130,8 @@ public class GameLoader {
                     int id = scanner.nextInt();
                     if (elementMap.get(id) == null) continue;
                     Element element = elementMap.get(id).newInstance();
-                    element.setX(x*80);
-                    element.setY(y*80);
+                    element.setX(x*tileSize);
+                    element.setY(y*tileSize);
                     elements.add(element);
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();

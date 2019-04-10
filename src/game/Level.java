@@ -46,14 +46,14 @@ public class Level {
      * @return de breedte van het level.
      * */
     public int getWidth() {
-        return tiles.length * 80;
+        return tiles[0].length * 80;
     }
 
     /**
      * @return de hoogte van het level.
      * */
     public int getHeigt() {
-        return tiles[0].length * 80;
+        return tiles.length * 80;
     }
 
     /**

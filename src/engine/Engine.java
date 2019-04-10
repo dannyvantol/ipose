@@ -82,8 +82,9 @@ public class Engine {
         }
         KeyBehaviorManager keyBehaviorManager = new KeyBehaviorManager(stage);
         CollisionManager collisionManager = new CollisionManager(game);
-        addBehavior(Collidable.class,collisionManager);
         addBehavior(KeyBehavior.class, keyBehaviorManager);
+
+        addBehavior(Collidable.class,collisionManager);
 
     }
 

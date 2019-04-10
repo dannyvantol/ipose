@@ -26,6 +26,7 @@ public class Renderer {
     private void initialSetup(){
         Scene scene = new Scene(new Group(),1024,768);
         this.stage.setScene(scene);
+        this.stage.getScene().setCamera(camera);
         this.stage.show();
     }
 
@@ -33,13 +34,11 @@ public class Renderer {
         this.stage.getScene().setRoot(new Group());
     }
 
-    //WORK IN PROGRESS IK WEET DAT DEZE MOET SAMENWERKEN MET DE CAMERA MAAR DAT MOET IK NOG EVEN UITDENKEN NO FLAME PLEASE!!!!!!!!!!!!!
     /**
      * Deze methode zet het renderen in werking.
      * */
     public void render(){
         camera.calculatePosition();
-        this.stage.getScene().setCamera(camera);
         renderTiles();
         renderElements();
 
