@@ -6,9 +6,6 @@ import game.Game;
 import game.Tile;
 import javafx.geometry.Bounds;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class CollisionManager implements BehaviorManager {
 
     private Game game;
@@ -25,7 +22,7 @@ public class CollisionManager implements BehaviorManager {
     @Override
     public void handle(Element element) {
         for (Element object : game.getActiveLevel().getElements()) {
-            if (object instanceof Collidable) {
+            if (element != object && object instanceof Collidable) {
                 Bounds bounds = object.getLayoutBounds();
                 if (element.intersects(bounds))
                     ((Collidable) element).handleCollision((Collidable) object);
