@@ -56,13 +56,14 @@ public class Engine {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                game.getActiveLevel().refreshElements();
                 Set<Class<? extends Behavior>> behaviorsKeySet = getBehaviors().keySet();
 
                 for (Class<? extends Behavior> behavior : behaviorsKeySet) {
                     BehaviorManager behaviorManager = getBehaviors().get(behavior);
 
                     Level level = getGame().getActiveLevel();
-                    ArrayList<Element> elements = level.getElements();
+                    ArrayList<Element> elements = level.getBufferedElements();
 
                     for (Element element : elements) {
                         if (behavior.isInstance(element))

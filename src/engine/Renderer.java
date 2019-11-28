@@ -4,9 +4,12 @@ import game.Element;
 import game.Game;
 import game.Tile;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 /**
  * Deze class zorgd voor het renderen van het spel.
@@ -39,8 +42,19 @@ public class Renderer {
      * */
     public void render(){
         camera.calculatePosition();
+        removeOldElements();
         renderTiles();
         renderElements();
+
+    }
+
+    private void removeOldElements() {
+        for(Node node:getRootGroup().getChildren()){
+            if(node instanceof Element && !this.game.getActiveLevel().getBufferedElements().contains(node)){
+                resetRenderer();
+            }
+        }
+
 
     }
 
@@ -67,7 +81,8 @@ public class Renderer {
         Rectangle rectangle = new Rectangle(1024+80,768+80);
         rectangle.setX(camera.getX()-80);
         rectangle.setY(camera.getY()-80);
-        for(Element element :this.game.getActiveLevel().getElements()){
+
+        for(Element element :this.game.getActiveLevel().getBufferedElements()){
             if(element.intersects(rectangle.getLayoutBounds())){
                 if(getRootGroup().getChildren().contains(element)){
                     getRootGroup().getChildren().remove(element);

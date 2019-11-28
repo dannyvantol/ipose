@@ -28,7 +28,7 @@ public class FirebaseService {
         Date date = new Date();
         String jsonString = "{ \"playerName\" : \""+playerName+"\" , \"score\" :  "+score+" , \"date\" : \""+date.toString()+"\" }";
 
-        URL urlObject = new URL("https://ipose2019.firebaseio.com/achievements/"+groupName+".json?auth="+groupToken);
+        URL urlObject = new URL("https://ipose2019.firebaseio.com/highscore/"+groupName+".json?auth="+groupToken);
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
 
         connection.setDoOutput(true);
@@ -46,7 +46,7 @@ public class FirebaseService {
      * @param groupName de naam van jullie groepje.
      * */
     public String getHighscores(String groupName) throws Exception{
-        URL urlObject = new URL("https://ipose2019.firebaseio.com/achievements/"+groupName+".json");
+        URL urlObject = new URL("https://ipose2019.firebaseio.com/highscore/"+groupName+".json");
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
 
         connection.setRequestMethod("GET");
@@ -67,7 +67,7 @@ public class FirebaseService {
         Date date = new Date();
         String jsonString = "{ \"achievementName\" : \""+achievementName+"\" , \"date\" : \""+date.toString()+"\" }";
 
-        URL urlObject = new URL("https://ipose2019.firebaseio.com/highscore/"+groupName+".json?auth="+groupToken);
+        URL urlObject = new URL("https://ipose2019.firebaseio.com/achievements/"+groupName+".json?auth="+groupToken);
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
 
         connection.setDoOutput(true);

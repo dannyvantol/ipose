@@ -10,6 +10,11 @@ public class Level {
     private Tile[][] tiles;
     private ArrayList<Element> elements;
     private Element focusedElement;
+    private ArrayList<Element> bufferedElements;
+
+    public Level() {
+        bufferedElements = new ArrayList<>();
+    }
 
     /**
      * @return het element dat door de camera gefocussed wordt.
@@ -70,5 +75,15 @@ public class Level {
      * */
     public void setElements(ArrayList<Element> elements) {
         this.elements = elements;
+    }
+
+
+    public void refreshElements(){
+        this.bufferedElements.clear();
+        this.bufferedElements.addAll(elements);
+    }
+
+    public ArrayList<Element> getBufferedElements() {
+        return bufferedElements;
     }
 }
